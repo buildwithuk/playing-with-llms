@@ -36,19 +36,19 @@ function App() {
     abortControllerRef.current = controller;
 
     try {
-      const stream = await openrouter.chat.send(
+      const stream = await (openrouter.chat.send(
         {
           chatRequest: {
             model: "liquid/lfm-2.5-1.2b-thinking:free",
             messages: [{ role: "user", content: prompt }],
             stream: true,
             include_reasoning: true,
-          },
+          } as any, // Bypasses internal parameter validation matching engine
         },
         {
           signal: controller.signal,
         },
-      );
+      ) as unknown as Promise<AsyncIterable<any>>);
 
       for await (const chunk of stream) {
         console.log(chunk);
@@ -76,7 +76,7 @@ function App() {
     } finally {
       setIsThinking(false);
       setIsLoading(false);
-      abortControllerRef.current = null; 
+      abortControllerRef.current = null; // Clean up memory reference
     }
   };
 
@@ -87,6 +87,7 @@ function App() {
     }
   };
 
+  // Function to trigger cancellation
   const handleStop = () => {
     if (abortControllerRef.current) {
       abortControllerRef.current.abort();
