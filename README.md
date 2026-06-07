@@ -10,7 +10,7 @@ A lightweight, full-stack client interface built with React, TypeScript, and Boo
 
 *Directory*: `openrouter-reasoning-interface`
 
-## Tech Stack
+#### Tech Stack
 
 - **Framework:** React 18+ (Vite SPA template)
 - **Language:** TypeScript
@@ -18,3 +18,14 @@ A lightweight, full-stack client interface built with React, TypeScript, and Boo
 - **API Integration:** Official `@openrouter/sdk`
 
 You will need an OpenRouter API key to use this interface. Sign up at [OpenRouter](https://openrouter.ai/) to obtain your API key.
+
+### Chat interface using Openrouter
+
+A fully functional, streaming chat interface that you can try out right here:
+https://playing-with-llms-production-cf18.up.railway.app/
+🛠️ 
+#### The Tech Stack:
+
+- **Frontend:** React + TypeScript + Bootstrap
+- **Serverless:** Pure client-side integration—calling APIs directly with no custom backend management required.
+- **Deployment:** Hosted seamlessly on Railway.
