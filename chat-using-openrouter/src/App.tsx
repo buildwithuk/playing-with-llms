@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { OpenRouter } from "@openrouter/sdk";
+import ReactMarkdown from "react-markdown";
 
 const openrouter = new OpenRouter({
   apiKey: import.meta.env.VITE_OPENROUTER_API_KEY,
@@ -180,7 +181,7 @@ function App() {
     <div className="container-fluid vh-100 d-flex flex-column bg-light p-0">
       <header className="bg-white border-bottom py-3 px-4 shadow-sm d-flex flex-column flex-sm-row gap-3 justify-content-between align-items-sm-center">
         <div>
-          <p className="m-0 fw-bold text-dark">Welcome to Live Chat</p>
+          <h5 className="m-0 fw-bold text-dark">OpenRouter Live Chat</h5>
         </div>
 
         <div
@@ -236,26 +237,65 @@ function App() {
           {messages.map((msg, index) => (
             <div
               key={index}
-              className={`d-flex flex-column mb-4 ${msg.role === "user" ? "align-items-end" : "align-items-start"}`}
+              className={`d-flex gap-3 mb-4 ${msg.role === "user" ? "justify-content-end" : "justify-content-start"}`}
             >
+              {msg.role === "assistant" && (
+                <div className="flex-shrink-0">
+                  <img
+                    src="https://openrouter.ai/favicon.ico"
+                    alt="Bot Profile"
+                    className="rounded-circle border border-secondary-subtle shadow-sm"
+                    style={{
+                      width: "38px",
+                      height: "38px",
+                      objectFit: "contain",
+                      padding: "4px",
+                      backgroundColor: "#fff",
+                    }}
+                  />
+                </div>
+              )}
+
               <div
                 className={`p-3 rounded-3 shadow-sm ${msg.role === "user" ? "bg-primary text-white" : "bg-white text-dark"}`}
-                style={{ maxWidth: "85%" }}
+                style={{ maxWidth: "75%" }}
               >
-                <div className="pre-line" style={{ whiteSpace: "pre-line" }}>
-                  {msg.content}
-                </div>
+                {msg.role === "user" ? (
+                  <div className="pre-line" style={{ whiteSpace: "pre-line" }}>
+                    {msg.content}
+                  </div>
+                ) : (
+                  <div className="markdown-content">
+                    <ReactMarkdown>{msg.content}</ReactMarkdown>
+                  </div>
+                )}
               </div>
             </div>
           ))}
 
           {isLoading && messages[messages.length - 1]?.role === "user" && (
-            <div className="d-flex align-items-center gap-2 mb-4 text-muted small">
-              <div
-                className="spinner-border spinner-border-sm text-secondary"
-                role="status"
-              />
-              <span>Awaiting stream response...</span>
+            <div className="d-flex align-items-center gap-3 mb-4">
+              <div className="flex-shrink-0">
+                <img
+                  src="https://openrouter.ai/favicon.ico"
+                  alt="Bot Profile"
+                  className="rounded-circle border border-secondary-subtle shadow-sm"
+                  style={{
+                    width: "38px",
+                    height: "38px",
+                    objectFit: "contain",
+                    padding: "4px",
+                    backgroundColor: "#fff",
+                  }}
+                />
+              </div>
+              <div className="d-flex align-items-center gap-2 text-muted small">
+                <div
+                  className="spinner-border spinner-border-sm text-secondary"
+                  role="status"
+                />
+                <span>Awaiting stream response...</span>
+              </div>
             </div>
           )}
 
