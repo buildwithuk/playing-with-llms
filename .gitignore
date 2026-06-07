@@ -142,3 +142,4 @@ vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
 running-llm-openrouter/.env
+chat-using-openrouter/.env
